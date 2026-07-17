@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Toaster position="top-right" richColors duration={3000}/>
         <NavBar/>
-        <main className="max-w-400 w-full min-h-[calc(100vh-120px)] mx-auto">
+        <main className="max-w-400 mt-20 w-full min-h-[calc(100vh-120px)] mx-auto">
           {children}
         </main>
         <Footer/>

@@ -1,13 +1,7 @@
-"use client";
+'use client'
 
 import { Button } from "@/components/ui/button";
-import {Card,CardContent} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { loginUserAction } from "../_actions/authAction";
-import { useActionState, useEffect } from "react";
-import { toast } from "sonner";
-import { Spinner } from "@/components/ui/spinner";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
@@ -15,35 +9,34 @@ import {
   FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
+import Link from "next/link";
 
-
-const LoginForm = () => {
-  const [state, action, pending] = useActionState(loginUserAction, false);
-
-  useEffect(() => {
-    if (!state) return;
-
-
-    if (!state.success) {
-      toast.error(state.message || "Something Wrong! Login Failed");
-    }
-  }, [state]);
-
+const RegisterForm = () => {
   return (
-    <div className="shadow-xl rounded-xl py-6 shadow-blue-100">
-
-     <div className={"flex flex-col gap-6"}>
+    <div className={"flex flex-col gap-6"}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form action={action} className="p-6 md:p-8">
+          <form className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold">Sign in your account</h1>
+                <h1 className="text-2xl font-bold">Create your account</h1>
                 <p className="text-sm text-balance text-muted-foreground">
-                  Enter your email below to Login your account
+                  Enter your email below to create your account
                 </p>
-              </div>           
+              </div>
+              {/* name */}
+              <Field>
+                <FieldLabel htmlFor="email">Name</FieldLabel>
+                <Input
+                  name="name"
+                  type="name"
+                  placeholder="Full Name"
+                  required
+                />
+              </Field>
               {/* email */}
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -58,20 +51,28 @@ const LoginForm = () => {
               {/* password */}
               <Field>
                 <FieldLabel htmlFor="password">Password</FieldLabel>
-                <Input name="password" type="password" placeholder="at least 6 characters" required />
+                <Input name="password" type="password" placeholder="at least 8 characters" required />
+              </Field>
+
+              {/* profile photo */}
+              <Field>
+                <FieldLabel htmlFor="password">Profile Photo</FieldLabel>
+                <Input name="profilePhoto" type="text" placeholder="Image link Here." required />
+              </Field>
+
+              {/* Bio */}
+              <Field>
+                <FieldLabel htmlFor="bio">Bio</FieldLabel>
+                <Textarea
+                  name="bio"
+                  placeholder="Write a short bio..."
+                  rows={4}
+                  required
+                />
               </Field>
 
               <Field>
-                {pending ? (
-                  <Button disabled className="w-full">
-                    <Spinner data-icon="inline-start" />
-                    Submitting...
-                  </Button>
-                ) : (
-                  <Button type="submit" className="w-full">
-                    Login
-                  </Button>
-                )}
+                <Button type="submit">Create Account</Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with
@@ -106,9 +107,9 @@ const LoginForm = () => {
                 </Button>
               </Field>
               <FieldDescription className="text-center flex gap-3">
-                {"Don't"} have an account?{" "}
-                <Link href={"/register"}>
-                  Register Now
+                Already have an account?{" "}
+                <Link href={"/login"}>
+                  Sign in
                 </Link>
               </FieldDescription>
             </FieldGroup>
@@ -128,8 +129,7 @@ const LoginForm = () => {
         and <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
-    </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

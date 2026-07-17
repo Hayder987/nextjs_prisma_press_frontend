@@ -1,7 +1,10 @@
+import RegisterForm from "../_components/RegisterForm"
 
 const RegisterPage = () => {
   return (
-    <div>RegisterPage</div>
+    <div className="max-w-250 mx-auto py-10">
+      <RegisterForm></RegisterForm>
+    </div>
   )
 }
 
