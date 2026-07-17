@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,13 +13,40 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import Link from "next/link";
+import { useActionState, useEffect } from "react";
+import { registerUserAction } from "../_actions/registerAction";
+import { Spinner } from "@/components/ui/spinner";
+import { RegisterState } from "../_interface/authInterface";
+import { toast } from "sonner";
+
+const initialState: RegisterState = {
+  success: false,
+  message: "",
+};
 
 const RegisterForm = () => {
+  const [state, action, pending] = useActionState(
+    registerUserAction,
+    initialState,
+  );
+
+
+  useEffect(() => {
+    
+    if (!state.message) return;
+
+    if (state.success) {
+      toast.success(state.message || "user Registration SuccessFully");
+    } else {
+      toast.error(state.message || "User Registration Failed!");
+    }
+  }, [state]);
+
   return (
     <div className={"flex flex-col gap-6"}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form action={action} className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Create your account</h1>
@@ -51,13 +78,23 @@ const RegisterForm = () => {
               {/* password */}
               <Field>
                 <FieldLabel htmlFor="password">Password</FieldLabel>
-                <Input name="password" type="password" placeholder="at least 8 characters" required />
+                <Input
+                  name="password"
+                  type="password"
+                  placeholder="at least 8 characters"
+                  required
+                />
               </Field>
 
               {/* profile photo */}
               <Field>
                 <FieldLabel htmlFor="password">Profile Photo</FieldLabel>
-                <Input name="profilePhoto" type="text" placeholder="Image link Here." required />
+                <Input
+                  name="profilePhoto"
+                  type="text"
+                  placeholder="Image link Here."
+                  required
+                />
               </Field>
 
               {/* Bio */}
@@ -72,7 +109,16 @@ const RegisterForm = () => {
               </Field>
 
               <Field>
-                <Button type="submit">Create Account</Button>
+                {pending ? (
+                  <Button disabled className="w-full">
+                    <Spinner data-icon="inline-start" />
+                    Submitting...
+                  </Button>
+                ) : (
+                  <Button type="submit" className="w-full">
+                    Create Account
+                  </Button>
+                )}
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with
@@ -107,10 +153,7 @@ const RegisterForm = () => {
                 </Button>
               </Field>
               <FieldDescription className="text-center flex gap-3">
-                Already have an account?{" "}
-                <Link href={"/login"}>
-                  Sign in
-                </Link>
+                Already have an account? <Link href={"/login"}>Sign in</Link>
               </FieldDescription>
             </FieldGroup>
           </form>

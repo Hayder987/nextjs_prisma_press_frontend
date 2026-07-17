@@ -16,10 +16,15 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 
 const LoginForm = () => {
   const [state, action, pending] = useActionState(loginUserAction, false);
+
+  const searchParams = useSearchParams();
+
+const email = searchParams.get("email");
 
   useEffect(() => {
     if (!state) return;
@@ -50,6 +55,7 @@ const LoginForm = () => {
                 <Input
                   name="email"
                   type="email"
+                  defaultValue={email ?? ""}
                   placeholder="user@example.com"
                   required
                 />

@@ -2,17 +2,9 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { LoginState } from "../_interface/authInterface";
 
 
-type LoginState = {
-  success: boolean;
-  statusCode: number;
-  message: string;
-  data?: {
-    accessToken: string;
-    refreshToken: string;
-  };
-};
 
 export const loginUserAction = async (
   prevState: LoginState,
