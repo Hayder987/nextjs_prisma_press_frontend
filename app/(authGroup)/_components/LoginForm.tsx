@@ -24,9 +24,6 @@ const LoginForm = () => {
   useEffect(() => {
     if (!state) return;
 
-    if (state.success) {
-      toast.success(state.message || "User Login SuccessFully!");
-    }
 
     if (!state.success) {
       toast.error(state.message || "Something Wrong! Login Failed");
