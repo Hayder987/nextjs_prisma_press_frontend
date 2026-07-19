@@ -1,9 +1,9 @@
-
 import { getMeProfile } from "@/services/getme";
 import NavBar from "../_components/NavBar";
 
-const DashBoardLayout = async({ children }: { children: React.ReactNode }) => {
-  const user = await getMeProfile();
+const AuthLayout = async({ children }: { children: React.ReactNode }) => {
+    const user = await getMeProfile();
+
   return (
     <div className="min-h-full flex flex-col">
       <NavBar user={user} />
@@ -12,4 +12,4 @@ const DashBoardLayout = async({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashBoardLayout;
+export default AuthLayout;

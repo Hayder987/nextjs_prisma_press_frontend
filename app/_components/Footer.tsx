@@ -55,7 +55,7 @@ const Footer = () => {
 
         {/* Divider */}
         <div className="border-t border-blue-600 pt-6 text-center text-sm text-blue-200">
-          © {new Date().getFullYear()} HDR Press. All Rights Reserved.
+          © 2026 HDR Press. All Rights Reserved.
         </div>
       </div>
     </footer>
