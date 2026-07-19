@@ -73,7 +73,7 @@ const RegisterForm = () => {
                   placeholder="user@example.com"
                   required
                 />
-                <FieldDescription>Enter Registered Email Here</FieldDescription>
+                <FieldDescription>Enter Valid Email Here</FieldDescription>
               </Field>
               {/* password */}
               <Field>

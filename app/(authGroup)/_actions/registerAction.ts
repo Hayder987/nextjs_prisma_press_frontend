@@ -8,7 +8,6 @@ export async function registerUserAction(
   formData: FormData,
 ): Promise<RegisterState> {
 
-    
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
@@ -31,8 +30,14 @@ export async function registerUserAction(
     body: JSON.stringify(payload),
   });
 
-
   const result: RegisterState = await res.json();
+
+  if (!res.ok) {
+  return {
+    success: false,
+    message: result.message || "Registration failed",
+  };
+}
   
   if(result.success){
     redirect(`/login?email=${encodeURIComponent(String(result.data?.user?.email))}`);

@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="max-w-400 mx-auto px-4 py-10">
         {/* Logo / Title */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold">Prisma Press</h2>
+          <h2 className="text-2xl font-bold">HDR Press</h2>
           <p className="text-sm text-blue-200 mt-2">
             Stay updated with the latest news around the world.
           </p>
@@ -55,7 +55,7 @@ const Footer = () => {
 
         {/* Divider */}
         <div className="border-t border-blue-600 pt-6 text-center text-sm text-blue-200">
-          © {new Date().getFullYear()} Prisma Press. All Rights Reserved.
+          © {new Date().getFullYear()} HDR Press. All Rights Reserved.
         </div>
       </div>
     </footer>
