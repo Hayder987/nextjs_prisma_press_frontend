@@ -13,7 +13,7 @@ export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const cookieStore = await cookies();
 
-  let accessToken = request.cookies.get("accessToken")?.value || null;
+  let accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
 
   let decodedAccessToken = accessToken
