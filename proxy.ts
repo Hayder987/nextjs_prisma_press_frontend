@@ -12,6 +12,8 @@ export async function proxy(request: NextRequest) {
   // get path name
   const pathname = request.nextUrl.pathname;
   const cookieStore = await cookies();
+  
+  const response = NextResponse.next();
 
   let accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
@@ -27,13 +29,22 @@ export async function proxy(request: NextRequest) {
       )
     : null;
 
+
   //access token has expired but refresh token is valid, get new access token from backend
   if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
     const result = await getNewAccessToken();
 
     if (result.success) {
       const newAccessToken = result?.data?.accessToken;
+      
+      // method 1
+      // response.cookies.set("accessToken", newAccessToken,{
+      //    httpOnly: true,
+      //   maxAge: 60 * 60 * 24,
+      //   sameSite: "lax",
+      // });
 
+      // method- 2
       cookieStore.set("accessToken", newAccessToken, {
         httpOnly: true,
         maxAge: 60 * 60 * 24,
@@ -54,6 +65,12 @@ export async function proxy(request: NextRequest) {
 
   //   if access token invalid or expired
   if (!decodedAccessToken?.success) {
+
+    // method 1
+    // response.cookies.delete("accessToken");
+
+
+    // method -2
     cookieStore.delete("accessToken");
   }
 
@@ -100,8 +117,9 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/not-found", request.url));
   }
 
+return response
 
-  return NextResponse.next();
+  // return NextResponse.next();
 }
 
 export const config = {
