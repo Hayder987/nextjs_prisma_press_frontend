@@ -51,7 +51,7 @@ export function NewsCard({ post }: NewsCardProps) {
           <div className="flex items-center justify-between text-xs text-muted-foreground">
             <span>
               By {post.author?.name ?? "Unknown"} ·{" "}
-              {new Date(post.createdAt).toLocaleDateString()}
+              {/* {new Date(post.createdAt).toLocaleDateString()} */}
             </span>
             <span className="flex items-center gap-1">
               <MessageSquareIcon className="size-3.5" />

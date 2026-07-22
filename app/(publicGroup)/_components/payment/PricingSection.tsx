@@ -8,7 +8,7 @@ export async function PricingSection() {
   const statusResult = {
     success:true,
     data:{
-      isSubscribed : true  
+      isSubscribed : true 
     }
   }
 
