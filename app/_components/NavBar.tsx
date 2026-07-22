@@ -21,8 +21,9 @@ import { Button } from "@/components/ui/button"
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "News", href: "/news" },
-  { label: "Login", href: "/login" },
   { label: "About", href: "/about" },
+  { label: "Premium", href: "/premium" },
+  {label: "Register", href: "/register"}
 ]
 
 
