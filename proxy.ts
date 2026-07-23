@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtUtils } from "./utils/jwt";
 import { cookies } from "next/headers";
+import { getSubscriptionStatus } from "./app/(publicGroup)/_actions/getSubscriptionStatus";
 
 const AUTH_ROUTES = ["/login", "/register"];
 const PUBLIC_ROUTES = ["/", "/news"];
@@ -12,7 +13,7 @@ export async function proxy(request: NextRequest) {
   // get path name
   const pathname = request.nextUrl.pathname;
   const cookieStore = await cookies();
-  
+
   const response = NextResponse.next();
 
   let accessToken = request.cookies.get("accessToken")?.value;
@@ -29,14 +30,13 @@ export async function proxy(request: NextRequest) {
       )
     : null;
 
-
   //access token has expired but refresh token is valid, get new access token from backend
   if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
     const result = await getNewAccessToken();
 
     if (result.success) {
       const newAccessToken = result?.data?.accessToken;
-      
+
       // method 1
       // response.cookies.set("accessToken", newAccessToken,{
       //    httpOnly: true,
@@ -57,7 +57,6 @@ export async function proxy(request: NextRequest) {
         accessToken!,
         process.env.JWT_ACCESS_SECRET as string,
       );
-
     }
   }
 
@@ -65,10 +64,8 @@ export async function proxy(request: NextRequest) {
 
   //   if access token invalid or expired
   if (!decodedAccessToken?.success) {
-
     // method 1
     // response.cookies.delete("accessToken");
-
 
     // method -2
     cookieStore.delete("accessToken");
@@ -117,7 +114,21 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/not-found", request.url));
   }
 
-return response
+  if (pathname === "/premium") {
+    const subscriptionPremiumStatus = await getSubscriptionStatus();
+
+    const isActive = Boolean(
+      subscriptionPremiumStatus.success &&
+      subscriptionPremiumStatus.data.isSubscribed,
+    );
+
+    if(!isActive){
+      return NextResponse.redirect(new URL("/payment", request.url));
+    }
+
+  }
+
+  return response;
 
   // return NextResponse.next();
 }

@@ -2,15 +2,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckIcon } from "lucide-react";
 import { SubscribeButton } from "./SubscribeButton";
+import { getSubscriptionStatus } from "../../_actions/getSubscriptionStatus";
 
 
-export async function PricingSection() {
-  const statusResult = {
-    success:true,
-    data:{
-      isSubscribed : true 
-    }
-  }
+export async function PricingSection () {
+  const statusResult = await getSubscriptionStatus();
 
   const isActive = Boolean(
     statusResult?.success && statusResult.data?.isSubscribed,
@@ -25,8 +21,7 @@ export async function PricingSection() {
         </CardTitle>
         <CardDescription>
           {isActive 
-            ? `Renews on`
-            // `Renews on ${new Date().toLocaleDateString()}`
+            ? `Renews on ${new Date(statusResult.data.currentPeriodEnd).toLocaleDateString()}`
             : "Unlock every premium story, cancel anytime."}
         </CardDescription>
       </CardHeader>
@@ -45,8 +40,8 @@ export async function PricingSection() {
             Support independent journalism
           </li>
         </ul>
-        {/* {!isActive && <SubscribeButton />} */}
-        {<SubscribeButton />}
+        {!isActive && <SubscribeButton />}
+        {/* {<SubscribeButton />} */}
       </CardContent>
     </Card>
   );
