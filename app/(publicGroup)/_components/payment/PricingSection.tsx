@@ -25,7 +25,8 @@ export async function PricingSection() {
         </CardTitle>
         <CardDescription>
           {isActive 
-            ? `Renews on ${new Date().toLocaleDateString()}`
+            ? `Renews on`
+            // `Renews on ${new Date().toLocaleDateString()}`
             : "Unlock every premium story, cancel anytime."}
         </CardDescription>
       </CardHeader>
@@ -44,8 +45,8 @@ export async function PricingSection() {
             Support independent journalism
           </li>
         </ul>
-        {!isActive && <SubscribeButton />}
-        {/* {<SubscribeButton />} */}
+        {/* {!isActive && <SubscribeButton />} */}
+        {<SubscribeButton />}
       </CardContent>
     </Card>
   );
