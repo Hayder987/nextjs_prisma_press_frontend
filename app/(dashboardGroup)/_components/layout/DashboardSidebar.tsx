@@ -1,68 +1,112 @@
 "use client";
 
 import Link from "next/link";
-import { Home, User, FileText, Newspaper } from "lucide-react";
-import clsx from "clsx";
-import SideBarMenu from "./SideBarMenu";
+import { usePathname } from "next/navigation";
+import {
+  Home,
+  FileText,
+  User,
+  LogOut,
+  Newspaper,
+} from "lucide-react";
 
-const sidebarMenus = [
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+
+const menuItems = [
   {
     title: "My Posts",
-    href: "/dashboard/my-post",
+    url: "/dashboard/my-post",
     icon: FileText,
   },
   {
     title: "My Profile",
-    href: "/dashboard/profile",
+    url: "/dashboard/profile",
     icon: User,
   },
 ];
 
 export default function DashboardSidebar() {
+  const pathname = usePathname();
+
   return (
-    <aside className="flex h-screen w-72 flex-col border-r border-sky-100 bg-sky-50">
-      {/* Logo */}
-      <div className="border-b border-sky-100 px-6 py-7">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md">
-            <Newspaper size={24} />
+    <Sidebar collapsible="icon">
+      {/* Header */}
+      <SidebarHeader className="border-b">
+        <Link href="/" className="flex items-center gap-3 px-2 py-2">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white">
+            <Newspaper className="h-5 w-5" />
           </div>
 
-          <div>
-            <h2 className="text-xl font-bold text-slate-900">Prisma Press</h2>
-            <p className="text-sm text-slate-500">User Dashboard</p>
+          <div className="flex flex-col">
+            <span className="font-semibold">Prisma Press</span>
+            <span className="text-xs text-muted-foreground">
+              User Dashboard
+            </span>
           </div>
-        </div>
-      </div>
-
-      {/* Back to home */}
-      <div className="underline">
-        <Link
-          href={"/"}
-          className={clsx(
-            "group flex items-center gap-4 rounded-xl px-4 py-3 text-[15px] font-medium transition-all duration-200",
-
-            "text-slate-700 hover:bg-white hover:text-blue-600 hover:shadow",
-          )}
-        >
-          <Home
-            size={20}
-            className={clsx("text-slate-500 group-hover:text-blue-600")}
-          />
-
-          <span className="text-blue-600">Back Home</span>
         </Link>
-      </div>
+      </SidebarHeader>
 
-      {/* side bar menu */}
-      <SideBarMenu sidebarMenus={sidebarMenus} />
+      {/* Content */}
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
 
-      {/* Logout */}
-      <div className="border-t border-sky-100 p-5">
-        <button className="flex w-full items-center gap-3 rounded-xl bg-red-500 px-4 py-3 font-medium text-white transition hover:bg-red-600">
-          Logout
-        </button>
-      </div>
-    </aside>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {/* Back Home */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === "/"}
+                >
+                  <Link href="/">
+                    <Home />
+                    <span>Back Home</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* Menu Items */}
+              {menuItems.map((item) => (
+                <SidebarMenuItem key={item.url}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname === item.url}
+                  >
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      {/* Footer */}
+      <SidebarFooter className="border-t">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton>
+              <LogOut />
+              <span>Logout</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
   );
 }

@@ -1,26 +1,35 @@
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
 import { getMeProfile } from "@/services/getme";
+import AdminSidebar from "./_components/layout/AdminDashBoardSidebar";
 import DashboardSidebar from "./_components/layout/DashboardSidebar";
-import AdminDashboardSidebar from "./_components/layout/AdminDashBoardSidebar";
 
 
-const DashBoardLayout = async({ children }: { children: React.ReactNode }) => {
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const user = await getMeProfile();
 
   return (
-     <div className="flex min-h-screen bg-slate-100">
-      {/* Sidebar */}
-        {user?.data?.user?.role === "USER" &&  <DashboardSidebar />}
-        {user?.data?.user?.role === "ADMIN" &&  <AdminDashboardSidebar/>}
-    
-      {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-6">
-        <div className="min-h-[calc(100vh-3rem)] rounded-2xl bg-white p-6 shadow-sm">
-          {children}
-        </div>
-      </main>
-    </div>
-  );
-};
+    <SidebarProvider>
+      {user?.data?.user?.role === "ADMIN" && <AdminSidebar  />}
+      {user?.data?.user?.role === "USER" && <DashboardSidebar  />}
 
-export default DashBoardLayout;
+      <SidebarInset>
+        <header className="flex h-16 items-center border-b bg-white px-5">
+          <SidebarTrigger />
+        </header>
+
+        <main className="p-6">
+          {children}
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
