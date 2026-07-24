@@ -2,8 +2,6 @@ import { NewsCard } from "@/app/(publicGroup)/_components/news/NewsCard";
 import { IPost } from "@/lib/types";
 import { getPremiumNews } from "../../_actions/getPremiumNews";
 import PremiumPagination from "./PremiumPagination";
-import { Suspense } from "react";
-import { NewsSkeleton } from "./NewsSkeleton";
 
 
 export async function PremiumNewsList({

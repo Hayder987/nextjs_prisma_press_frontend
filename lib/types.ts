@@ -1,4 +1,5 @@
 export type IPostStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
+import { LucideIcon } from "lucide-react";
 
 export type IAuthor = {
     id: string;
@@ -45,4 +46,11 @@ export interface IMeta {
   limit: number;
   total: number;
   totalPages: number;
+}
+
+
+export interface ISidebarMenu {
+  title: string;
+  href: string;
+  icon: LucideIcon;
 }

@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { NewsSkeleton } from "../_components/news/NewsSkeleton";
 import { PublicNewsList } from "../_components/news/PublicNewsList";
 import { NewsSearchBar } from "../_components/news/NewsSearchBar";
-import PaginationAll from "../_components/news/Pagination";
 import PublicPagination from "../_components/news/PublicPagination";
 
 const NewsPage = ({
