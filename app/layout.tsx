@@ -2,7 +2,6 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
-import Footer from "./_components/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({
@@ -27,8 +26,6 @@ export default async function RootLayout({
           <main className="w-full min-h-[calc(100vh-120px)] mx-auto">
             {children}
           </main>
-
-          <Footer />
         </TooltipProvider>
       </body>
     </html>

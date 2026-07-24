@@ -22,6 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 const menuItems = [
   {
@@ -83,19 +84,28 @@ export default function AdminSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === item.url}
-                  >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {/* Menu Items */}
+              {menuItems.map((item) => {
+                const isActive = pathname === item.url;
+                return (
+                  <SidebarMenuItem key={item.url}>
+                    <SidebarMenuButton
+                      asChild
+                      // isActive={isActive}
+                      className={cn(
+                        "transition-colors",
+                        isActive &&
+                          "bg-blue-600 text-white hover:bg-blue-700 hover:text-white",
+                      )}
+                    >
+                      <Link href={item.url}>
+                        <item.icon className="size-4" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
 
             </SidebarMenu>
           </SidebarGroupContent>

@@ -2,13 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Home,
-  FileText,
-  User,
-  LogOut,
-  Newspaper,
-} from "lucide-react";
+import { Home, FileText, User, LogOut, Newspaper } from "lucide-react";
 
 import {
   Sidebar,
@@ -22,6 +16,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 const menuItems = [
   {
@@ -66,10 +61,7 @@ export default function DashboardSidebar() {
             <SidebarMenu>
               {/* Back Home */}
               <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname === "/"}
-                >
+                <SidebarMenuButton asChild isActive={pathname === "/"}>
                   <Link href="/">
                     <Home />
                     <span>Back Home</span>
@@ -78,19 +70,27 @@ export default function DashboardSidebar() {
               </SidebarMenuItem>
 
               {/* Menu Items */}
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === item.url}
-                  >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {menuItems.map((item) => {
+                const isActive = pathname === item.url;
+                return (
+                  <SidebarMenuItem key={item.url}>
+                    <SidebarMenuButton
+                      asChild
+                      // isActive={isActive}
+                      className={cn(
+                        "transition-colors",
+                        isActive &&
+                          "bg-blue-600 text-white hover:bg-blue-700 hover:text-white",
+                      )}
+                    >
+                      <Link href={item.url}>
+                        <item.icon className="size-4" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
