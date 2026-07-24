@@ -1,7 +1,7 @@
 
 import { IPost } from "@/lib/types";
 import { MyPostCard } from "./MyPostCard";
-import { getMyPosts } from "../_actions/getMyPosts";
+import { getMyPosts } from "../_actions/myPostsActions";
 
 export async function MyPostsList() {
   const result = await getMyPosts();

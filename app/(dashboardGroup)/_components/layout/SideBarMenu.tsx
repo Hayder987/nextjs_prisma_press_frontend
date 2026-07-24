@@ -2,7 +2,6 @@
 
 import { ISidebarMenu } from "@/lib/types";
 import clsx from "clsx";
-import { Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
