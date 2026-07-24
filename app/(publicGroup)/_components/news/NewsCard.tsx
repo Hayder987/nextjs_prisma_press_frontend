@@ -20,6 +20,8 @@ export function NewsCard({ post }: NewsCardProps) {
             alt={post.title}
             width={400}
             height={400}
+            // loading="eager"
+            priority
             // fill
           />
         )}
