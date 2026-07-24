@@ -24,14 +24,13 @@ export function NewsSearchBar() {
     // }
     // router.replace(`${pathName}?${params.toString()}`);
 
-    // prevent debounce using use ref 
+    // prevent debounce using use ref -----
      if(debouncedReference.current){
             clearTimeout(debouncedReference.current)
      }
 
       debouncedReference.current = setTimeout(() =>{
-            console.log(value);
-
+            
             const params = new URLSearchParams();
 
             if (value) {

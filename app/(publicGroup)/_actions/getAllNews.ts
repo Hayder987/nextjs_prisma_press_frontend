@@ -34,7 +34,6 @@ export const getAllNews = async ({
 
  const params = createSearchParams({query})
 
-
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/posts?${params.toString()}`, {
     cache: "no-cache",
     next: {

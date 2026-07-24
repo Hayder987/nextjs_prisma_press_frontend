@@ -1,6 +1,10 @@
 import { NewsCard } from "@/app/(publicGroup)/_components/news/NewsCard";
 import { IPost } from "@/lib/types";
 import { getPremiumNews } from "../../_actions/getPremiumNews";
+import PremiumPagination from "./PremiumPagination";
+import { Suspense } from "react";
+import { NewsSkeleton } from "./NewsSkeleton";
+
 
 export async function PremiumNewsList({
   searchParams,
@@ -26,6 +30,15 @@ export async function PremiumNewsList({
           <NewsCard key={post.id} post={post} />
         ))}
       </div>
+     
+        <div className="">
+        {
+          result?.data.length > 0 ? (
+            <PremiumPagination meta={result?.meta}/>
+          ): ''
+        }
+      </div>
+
     </div>
   );
 }

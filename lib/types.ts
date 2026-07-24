@@ -39,3 +39,10 @@ export type IPost = {
     createdAt: string;
     updatedAt: string;
 };
+
+export interface IMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
