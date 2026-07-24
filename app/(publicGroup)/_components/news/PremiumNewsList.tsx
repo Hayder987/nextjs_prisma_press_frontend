@@ -2,8 +2,14 @@ import { NewsCard } from "@/app/(publicGroup)/_components/news/NewsCard";
 import { IPost } from "@/lib/types";
 import { getPremiumNews } from "../../_actions/getPremiumNews";
 
-export async function PremiumNewsList() {
-  const result = await getPremiumNews();
+export async function PremiumNewsList({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+
+   const query = await searchParams;
+  const result = await getPremiumNews({query});
 
   if (!result.success || !result.data?.length) {
     return (
