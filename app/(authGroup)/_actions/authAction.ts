@@ -6,6 +6,7 @@ import { LoginState } from "../_interface/authInterface";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const loginUserAction = async (
+  redirectTo: string,
   prevState: LoginState,
   formData: FormData,
 ) => {
@@ -44,14 +45,21 @@ export const loginUserAction = async (
 
     const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
 
-    if(decodedToken.role === "USER"){
-      redirect("/dashboard")
+    if (
+      redirectTo &&
+      typeof redirectTo === "string" &&
+      redirectTo.startsWith("/") &&
+      !redirectTo.startsWith("//")
+    ) {
+      redirect(redirectTo);
     }
-    else if (decodedToken.role === "ADMIN"){
-      redirect("/admin-dashboard")
-    }
-    else if (decodedToken.role === "AUTHOR"){
-      redirect("/author-dashboard")
+
+    if (decodedToken.role === "USER") {
+      redirect("/dashboard");
+    } else if (decodedToken.role === "ADMIN") {
+      redirect("/admin-dashboard");
+    } else if (decodedToken.role === "AUTHOR") {
+      redirect("/author-dashboard");
     }
   }
 

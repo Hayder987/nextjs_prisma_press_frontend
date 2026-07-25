@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
+import { isAccessTokenExist } from "@/services/refreshToken";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
@@ -22,17 +23,11 @@ export const createPost = async (prevState:PostState, formData:FormData)=>{
         isPremium: formData.get("isPremium") === "on"
     }
 
-    const cookieStore = await cookies();
-
-    const accessToken = cookieStore.get("accessToken")?.value || null;
     
-      if (!accessToken) {
-        return {
-          success: false,
-          message: "User not logged in!",
-        };
-      }
 
+    const accessToken = await isAccessTokenExist() ;
+    
+     
     
       const res = await fetch(`${process.env.BACKEND_API_URL}/api/posts`, {
         method : "POST",
@@ -79,18 +74,10 @@ export const updatePost = async (postId:string , prevState:PostState, formData:F
         isPremium: formData.get("isPremium") === "on"
     }
 
-    const cookieStore = await cookies();
 
-    const accessToken = cookieStore.get("accessToken")?.value || null;
+    const accessToken = await isAccessTokenExist() ;
     
-      if (!accessToken) {
-        return {
-          success: false,
-          message: "User not logged in!",
-        };
-      }
-
-    
+      
       const res = await fetch(`${process.env.BACKEND_API_URL}/api/posts/${postId}`, {
         method : "PATCH",
         headers: {

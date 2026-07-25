@@ -20,11 +20,13 @@ import { useSearchParams } from "next/navigation";
 
 
 const LoginForm = () => {
-  const [state, action, pending] = useActionState(loginUserAction, false);
-
   const searchParams = useSearchParams();
+    const redirectTo = searchParams.get("redirectTo") ?? ""
 
-const email = searchParams.get("email");
+  const [state, action, pending] = useActionState(loginUserAction.bind(null, redirectTo), false);
+
+
+  const email = searchParams.get("email");
 
   useEffect(() => {
     if (!state) return;

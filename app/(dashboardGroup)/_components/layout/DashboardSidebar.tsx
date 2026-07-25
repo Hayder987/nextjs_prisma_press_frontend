@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Home, FileText, User, LogOut, Newspaper } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Home, LogOut, Newspaper } from "lucide-react";
 
 import {
   Sidebar,
@@ -20,11 +20,14 @@ import { cn } from "@/lib/utils";
 import { NavbarProps } from "@/app/(authGroup)/_interface/getMeProfileInterface";
 import { ISidebarItem } from "@/lib/types";
 import { sidebarMenuItems } from "../../_config/sidebarMenuItems";
+import { logout } from "@/services/logout";
+import { toast } from "sonner";
 
 
 
 export default function DashboardSidebar({user}: NavbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   let menuItems : ISidebarItem[] = [];
 
@@ -38,6 +41,13 @@ export default function DashboardSidebar({user}: NavbarProps) {
     menuItems = sidebarMenuItems.ADMIN
   }
 
+  const handleLogout = async(action:string) =>{
+    if (action === "logout") {
+      await logout();
+      toast.info("User Logout SuccessFully ");
+      router.push("/login");
+    }
+  }
 
 
   return (
@@ -106,7 +116,11 @@ export default function DashboardSidebar({user}: NavbarProps) {
       <SidebarFooter className="border-t">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton>
+            <SidebarMenuButton
+            onClick={()=>{
+              handleLogout("logout")
+            }}
+            >
               <LogOut />
               <span>Logout</span>
             </SidebarMenuButton>
