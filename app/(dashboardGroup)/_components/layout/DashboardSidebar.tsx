@@ -17,22 +17,28 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { NavbarProps } from "@/app/(authGroup)/_interface/getMeProfileInterface";
+import { ISidebarItem } from "@/lib/types";
+import { sidebarMenuItems } from "../../_config/sidebarMenuItems";
 
-const menuItems = [
-  {
-    title: "My Posts",
-    url: "/dashboard/my-post",
-    icon: FileText,
-  },
-  {
-    title: "My Profile",
-    url: "/dashboard/profile",
-    icon: User,
-  },
-];
 
-export default function DashboardSidebar() {
+
+export default function DashboardSidebar({user}: NavbarProps) {
   const pathname = usePathname();
+
+  let menuItems : ISidebarItem[] = [];
+
+  if(user?.data?.user?.role === "USER"){
+    menuItems = sidebarMenuItems.USER
+  }
+  else if(user?.data?.user?.role === "AUTHOR"){
+    menuItems = sidebarMenuItems.AUTHOR
+  }
+  else if(user?.data?.user?.role === "ADMIN"){
+    menuItems = sidebarMenuItems.ADMIN
+  }
+
+
 
   return (
     <Sidebar collapsible="icon">
