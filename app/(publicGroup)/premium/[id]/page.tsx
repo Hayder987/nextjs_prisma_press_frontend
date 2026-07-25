@@ -1,15 +1,15 @@
-import { redirect } from "next/navigation";
-import { getPublicPostById } from "../../_actions/getPublicNewsById";
+import React from "react";
+import { getPremiumNewsById } from "../../_actions/getPremiumNewsById";
 import PostDetails from "../../_components/news/PostDetails";
 
-const NewsByIdPage = async ({
+const PremiumSingleNewsPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
 
-  const post = await getPublicPostById({ id });
+  const post = await getPremiumNewsById({ id });
 
   if (!post.success) {
     return <div className="text-center py-10 text-xl">Post not found</div>;
@@ -17,9 +17,9 @@ const NewsByIdPage = async ({
 
   return (
     <div>
-      <PostDetails mode={"news"} post={post?.data?.post} />
+      <PostDetails mode={"premium"} post={post?.data} />
     </div>
   );
 };
 
-export default NewsByIdPage;
+export default PremiumSingleNewsPage;

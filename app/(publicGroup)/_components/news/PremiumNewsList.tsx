@@ -2,6 +2,7 @@ import { NewsCard } from "@/app/(publicGroup)/_components/news/NewsCard";
 import { IPost } from "@/lib/types";
 import { getPremiumNews } from "../../_actions/getPremiumNews";
 import PremiumPagination from "./PremiumPagination";
+import Link from "next/link";
 
 
 export async function PremiumNewsList({
@@ -25,7 +26,8 @@ export async function PremiumNewsList({
     <div className="space-y-8">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {result.data.map((post: IPost) => (
-          <NewsCard key={post.id} post={post} />
+          // <NewsCard key={post.id} post={post} />
+          <Link href={`/premium/${post.id}`} key={post.id}><NewsCard post={post} /></Link>
         ))}
       </div>
      

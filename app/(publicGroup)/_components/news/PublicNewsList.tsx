@@ -2,6 +2,7 @@
 import { NewsCard } from "@/app/(publicGroup)/_components/news/NewsCard";
 import { IPost } from "@/lib/types";
 import { getAllNews } from "../../_actions/getAllNews";
+import Link from "next/link";
 
 export async function PublicNewsList({
   searchParams,
@@ -24,7 +25,7 @@ export async function PublicNewsList({
     <div className="space-y-8">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {result.data.map((post : IPost ) => (
-          <NewsCard key={post.id} post={post} />
+          <Link href={`/news/${post.id}`} key={post.id}><NewsCard post={post} /></Link>
         ))}
       </div>
       

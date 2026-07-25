@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 import { getSubscriptionStatus } from "./app/(publicGroup)/_actions/getSubscriptionStatus";
 
 const AUTH_ROUTES = ["/login", "/register"];
-const PUBLIC_ROUTES = ["/", "/news"];
+const PUBLIC_ROUTES = ["/", "/news", "/about"];
 
 export async function proxy(request: NextRequest) {
   // get path name
@@ -89,9 +89,21 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  const isPublicRoute = PUBLIC_ROUTES.some(
-    (route) => pathname === route || pathname.startsWith(route + "/"),
+  //step-1: details page not protected public
+
+  // const isPublicRoute = PUBLIC_ROUTES.some(
+  //   (route) => {
+  //     return pathname === route || pathname.startsWith(route + "/")
+  //   },
+  // );
+
+  // step-2: details page protected (private)
+   const isPublicRoute = PUBLIC_ROUTES.some(
+    (route) => {
+      return pathname === route 
+    },
   );
+
 
   const isAuthRoute = AUTH_ROUTES.some(
     (route) => pathname === route || pathname.startsWith(route + "/"),

@@ -132,7 +132,7 @@ const NavBar = ({ user }: NavbarProps) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Link href={"login"}>
+              <Link href={"/login"}>
                 <Button className="">Login</Button>
               </Link>
             )}

@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 import { isAccessTokenExist } from "@/services/refreshToken";
@@ -145,4 +146,23 @@ export const getMyPosts = async () =>{
       const result = await res.json();
    
       return result;
+};
+
+export const deletePostById = async ({id} : {id:string})=>{
+  const accessToken = await isAccessTokenExist() ;
+
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/posts/${id}`,{
+    method : "DELETE",
+    headers : {
+     Cookie: `accessToken=${accessToken}` 
+    },
+  })
+
+  const result = await res.json();
+
+  if(result.success){
+    revalidateTag("my-posts", {
+      expire : 0
+    })
+  }
 }

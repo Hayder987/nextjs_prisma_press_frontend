@@ -61,3 +61,25 @@ export type ISidebarItem = {
     url: string,
     icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>
 }
+
+export interface PostDetailsProps {
+  mode : "news" | "premium"
+  post: {
+    id: string;
+    title: string;
+    content: string;
+    thumbnail: string;
+    isFeatured: boolean;
+    status: string;
+    tags: string[];
+    views: number;
+    isPremium: boolean;
+    createdAt: string;
+    updatedAt: string;
+    authorId: string;
+    comments: unknown[];
+    _count: {
+      comments: number;
+    };
+  };
+}
