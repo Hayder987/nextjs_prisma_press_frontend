@@ -6,8 +6,6 @@ import { deletePostById } from "../_actions/myPostsActions";
 import { toast } from "sonner";
 
 
-
-
 const DeletePostButton = ({id} : {id:string}) => {
  const handleDelete = async () => {
     console.log("Deleted");
